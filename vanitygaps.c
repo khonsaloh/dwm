@@ -669,6 +669,7 @@ grid(Monitor *m)
  * Horizontal grid layout + gaps
  * https://dwm.suckless.org/patches/horizgrid/
  */
+/*
 void
 horizgrid(Monitor *m) {
 	Client *c;
@@ -717,6 +718,7 @@ horizgrid(Monitor *m) {
 			sx += WIDTH(c) + iv;
 		}
 }
+*/
 
 /*
  * nrowgrid layout + gaps
