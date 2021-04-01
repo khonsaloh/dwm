@@ -7,6 +7,12 @@ Requirements
 ------------
 In order to build dwm you need the Xlib header files.
 
+keep in mind
+------------
+The documentation is the source code, I've splitted up the code into several files which are being imported. (It's like make an import from python, but with the key word "#include")
+theres a good purpose for that, I find it more easy to change, comment and uncomment, It's more organized in my opinion.
+and I've made several branches to test some patch or change that I can think of. It's easy to go back into the history and go forward.
+some features like swallowing, scratchpads, restart, alpha ... can be handle by third party programs, independenly from the WM. (This is my approach)
 
 Installation
 ------------

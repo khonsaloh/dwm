@@ -150,6 +150,8 @@ static Key keys[] = {
 	//{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_o,  shiftview,       {.i = +1 } },
 	{ MODKEY,                       XK_i, shiftview,       {.i = -1 } },
+	//{ MODKEY|ShiftMask,             XK_o,  shifttag,       {.i = +1 } },
+	//{ MODKEY|ShiftMask,              XK_i, shifttag,       {.i = -1 } },
 
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
