@@ -22,7 +22,7 @@ static const char col_cyan[]        = "#005577";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_gray2,  col_gray4  },
+	[SchemeSel]  = { col_gray4, col_gray2,  col_gray3  },
 };
 
 /* tagging */
@@ -38,6 +38,7 @@ static const Rule rules[] = {
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Lxappearance",  NULL,       NULL,       0,       1,           -1 },
 	{ "hola",  NULL,       NULL,       0,       1,           -1 },
+	{ "Display-im6.q16",  NULL,       NULL,       0,       1,           -1 },
 
 
 };
@@ -118,6 +119,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,             XK_k,      aspectresize,   {.i = -24} },
 
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ ControlMask,			XK_F4,  	spawn,    SHCMD("$HOME/.local/bin/nopath/comp") },
+	{ ControlMask,			XK_F6,  	spawn,    SHCMD("$HOME/.local/bin/nopath/betterlockscreen -l") },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("$HOME/.local/bin/nopath/scratchpad") },
 	{ MODKEY,             		XK_w, 	spawn,          SHCMD("firefox-esr") },
 	{ MODKEY,             		XK_m, 	spawn,          SHCMD("bookmarker") },
@@ -150,6 +153,8 @@ static Key keys[] = {
 	//{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_o,  shiftview,       {.i = +1 } },
 	{ MODKEY,                       XK_i, shiftview,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i, shiftempty,       {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_o, shiftempty,       {.i = +1 } },
 	//{ MODKEY|ShiftMask,             XK_o,  shifttag,       {.i = +1 } },
 	//{ MODKEY|ShiftMask,              XK_i, shifttag,       {.i = -1 } },
 
@@ -210,4 +215,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-

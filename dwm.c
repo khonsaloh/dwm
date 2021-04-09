@@ -1154,6 +1154,10 @@ manage(Window w, XWindowAttributes *wa)
 	updatewindowtype(c);
 	updatesizehints(c);
 	updatewmhints(c);
+	// alwayscenter patch add only these lines
+	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+	// end of alwayscenter patch
 	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
 	grabbuttons(c, 0);
 	if (!c->isfloating)
@@ -2302,7 +2306,7 @@ zoom(const Arg *arg)
 			return;
 	pop(c);
 }
-
+//#include "autostart"
 int
 main(int argc, char *argv[])
 {
@@ -2321,6 +2325,7 @@ main(int argc, char *argv[])
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();
+	//runautostart();
 	run();
 	cleanup();
 	XCloseDisplay(dpy);
