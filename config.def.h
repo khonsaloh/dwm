@@ -39,6 +39,8 @@ static const Rule rules[] = {
 	{ "Lxappearance",  NULL,       NULL,       0,       1,           -1 },
 	{ "hola",  NULL,       NULL,       0,       1,           -1 },
 	{ "Display-im6.q16",  NULL,       NULL,       0,       1,           -1 },
+	{ "ffplay",  NULL,       NULL,       0,       1,           -1 },
+	{ "Webcam",  NULL,       NULL,       0,       1,           -1 },
 
 
 };
@@ -90,7 +92,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", "#926e34", "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 #define XF86AudioMute 0x1008ff12
@@ -124,7 +126,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("$HOME/.local/bin/nopath/scratchpad") },
 	{ MODKEY,             		XK_w, 	spawn,          SHCMD("firefox-esr") },
 	{ MODKEY,             		XK_m, 	spawn,          SHCMD("bookmarker") },
-	{ MODKEY,             		XK_ntilde, 	spawn,          SHCMD("passmenu --type") },
+	{ MODKEY,             		XK_Delete, 	spawn,          SHCMD("doas /usr/sbin/poweroff") },
+	{ MODKEY,             		XK_ntilde, 	spawn,          SHCMD("elpaso -t") },
+	{ MODKEY,             		XK_e, 	spawn,          SHCMD("pcmanfm") },
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -205,7 +209,7 @@ static Button buttons[] = {
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	//{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkStatusText,        0,              Button1,        sigdwmblocks,   {.i = 1} },
-	{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
+	//{ ClkStatusText,        0,              Button2,        sigdwmblocks,   {.i = 2} },
 	{ ClkStatusText,        0,              Button3,        sigdwmblocks,   {.i = 3} },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
