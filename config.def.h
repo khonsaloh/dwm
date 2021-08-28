@@ -46,7 +46,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.60; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -120,8 +120,10 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,             XK_j,      aspectresize,   {.i = +24} },
 	{ MODKEY|ControlMask,             XK_k,      aspectresize,   {.i = -24} },
 
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	//{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("$HOME/.local/bin/nopath/lanzador") },
 	{ ControlMask,			XK_F4,  	spawn,    SHCMD("$HOME/.local/bin/nopath/comp") },
+	{ ControlMask,			XK_Home,  	spawn,    SHCMD("$HOME/.local/bin/nopath/record") },
 	{ ControlMask,			XK_F6,  	spawn,    SHCMD("$HOME/.local/bin/nopath/betterlockscreen -l") },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("$HOME/.local/bin/nopath/scratchpad") },
 	{ MODKEY,             		XK_w, 	spawn,          SHCMD("firefox-esr") },
@@ -171,6 +173,7 @@ static Key keys[] = {
 	{ 0,                XF86AudioMute,      spawn,            SHCMD("amixer sset Master toggle ; kill -44 $(pidof dwmblocks)") },
 	{ 0,                XF86AudioLowerVolume,      spawn,            SHCMD("amixer sset Master 5%- ; kill -44 $(pidof dwmblocks)") },
 	{ 0,                XF86AudioRaiseVolume,      spawn,            SHCMD("amixer sset Master 5%+ ; kill -44 $(pidof dwmblocks)") },
+	{ ControlMask,      XK_F10,      spawn,            SHCMD("cmus-remote -s") },
 
 	{ MODKEY,              XK_g,      incrgaps,       {.i = +1 } },
 	{ MODKEY|ShiftMask,    XK_g,      incrgaps,       {.i = -1 } },
