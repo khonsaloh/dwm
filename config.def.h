@@ -126,7 +126,7 @@ static Key keys[] = {
 	{ ControlMask,			XK_Home,  	spawn,    SHCMD("$HOME/.local/bin/nopath/record") },
 	{ ControlMask,			XK_F6,  	spawn,    SHCMD("$HOME/.local/bin/nopath/betterlockscreen -l") },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("$HOME/.local/bin/nopath/scratchpad") },
-	{ MODKEY,             		XK_w, 	spawn,          SHCMD("firefox-esr") },
+	{ MODKEY,             		XK_w, 	spawn,          SHCMD("$BROWSER") },
 	{ MODKEY,             		XK_m, 	spawn,          SHCMD("bookmarker") },
 	{ MODKEY,             		XK_Delete, 	spawn,          SHCMD("doas /usr/sbin/poweroff") },
 	{ MODKEY,             		XK_ntilde, 	spawn,          SHCMD("elpaso -t") },
