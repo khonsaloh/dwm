@@ -10,7 +10,7 @@ static const unsigned int gappoh    = 10;       /* horiz outer gap between windo
 static const unsigned int gappov    = 20;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 //===***===
-static const int showbar            = 1;        /* 0 means no bar */
+static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
@@ -36,6 +36,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	//{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Brave-browser",  NULL,       NULL,       1 << 8,       0,           -1 },
 	{ "Lxappearance",  NULL,       NULL,       0,       1,           -1 },
 	{ "hola",  NULL,       NULL,       0,       1,           -1 },
 	{ "Display-im6.q16",  NULL,       NULL,       0,       1,           -1 },
@@ -121,12 +122,12 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,             XK_k,      aspectresize,   {.i = -24} },
 
 	//{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("$HOME/.local/bin/nopath/lanzador") },
-	{ ControlMask,			XK_F4,  	spawn,    SHCMD("$HOME/.local/bin/nopath/comp") },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("$HOME/.local/bin/lanzador") },
+	{ ControlMask,			XK_F4,  	spawn,    SHCMD("$HOME/.local/bin/nopath/compositor") },
 	{ ControlMask,			XK_Home,  	spawn,    SHCMD("$HOME/.local/bin/nopath/record") },
 	{ ControlMask,			XK_F6,  	spawn,    SHCMD("$HOME/.local/bin/nopath/betterlockscreen -l") },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          SHCMD("$HOME/.local/bin/nopath/scratchpad") },
-	{ MODKEY,             		XK_w, 	spawn,          SHCMD("firefox-esr") },
+	{ MODKEY,             		XK_w, 	spawn,          SHCMD("$BROWSER") },
 	{ MODKEY,             		XK_m, 	spawn,          SHCMD("bookmarker") },
 	{ MODKEY,             		XK_Delete, 	spawn,          SHCMD("doas /usr/sbin/poweroff") },
 	{ MODKEY,             		XK_ntilde, 	spawn,          SHCMD("elpaso -t") },
