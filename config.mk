@@ -10,9 +10,9 @@ MANPREFIX = ${PREFIX}/share/man
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
-# Xinerama, comment if you don't want it (don't have multimonitor)
-#XINERAMALIBS  = -lXinerama
-#XINERAMAFLAGS = -DXINERAMA
+# Xinerama, comment if you don't want it (multimonitor support)
+XINERAMALIBS  = -lXinerama
+XINERAMAFLAGS = -DXINERAMA
 
 # freetype
 FREETYPELIBS = -lfontconfig
