@@ -90,7 +90,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", "#926e34", "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "rofi -show drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 #define XF86AudioMute 0x1008ff12
@@ -118,59 +118,65 @@ static Key keys[] = {
 
 	{ MODKEY|ControlMask,         XK_comma,                 cyclelayout,      {.i = -1 } },
 	{ MODKEY|ControlMask,         XK_period,                cyclelayout,      {.i = +1 } },
-	
+
   //resize focused window
-  //{ MODKEY|ControlMask,         XK_j,                     aspectresize,     {.i = +24} },
-	//{ MODKEY|ControlMask,         XK_k,                     aspectresize,     {.i = -24} },
+	{ MODKEY,                     XK_h,                     setmfact,          {.f = -0.05} },
+	{ MODKEY,                     XK_l,                     setmfact,          {.f = +0.05} },
+  //{ MODKEY|ControlMask,       XK_j,                     aspectresize,     {.i = +24} },
+	//{ MODKEY|ControlMask,       XK_k,                     aspectresize,     {.i = -24} },
 
 	// change focused window
   { MODKEY,                     XK_j,                     focusstack,       {.i = +1 } },
   { MODKEY,                     XK_k,                     focusstack,       {.i = -1 } },
-  
+
+  // move focused window on the same tag
   { MODKEY|ShiftMask,           XK_j,                     movestack,        {.i = +1 } },
-	{ MODKEY|ShiftMask,           XK_k,                     movestack,        {.i = -1 } },
-	
+  { MODKEY|ShiftMask,           XK_k,                     movestack,        {.i = -1 } },
+
   // no keys to prevent warning when compiling otherwise I should change the file referencing the function, and you know, it's fastest
   { ENOKEY,                     XK_f,                     togglefullscr,    {0} },
   { ENOKEY,                     XK_0,                     defaultgaps,      {0} },
 
-  //{ MODKEY|ShiftMask,           XK_j,                     inplacerotate,    {.i = +1} },
-  //{ MODKEY|ShiftMask,           XK_k,                     inplacerotate,    {.i = -1} },
-  //{ MODKEY|ShiftMask,           XK_h,                     inplacerotate,    {.i = +2} },
-  //{ MODKEY|ShiftMask,           XK_l,                     inplacerotate,    {.i = -2} },
-	
+  //{ MODKEY|ShiftMask,         XK_j,                     inplacerotate,    {.i = +1} },
+  //{ MODKEY|ShiftMask,         XK_k,                     inplacerotate,    {.i = -1} },
+  //{ MODKEY|ShiftMask,         XK_h,                     inplacerotate,    {.i = +2} },
+  //{ MODKEY|ShiftMask,         XK_l,                     inplacerotate,    {.i = -2} },
+
   // cycle occupied tags in the same focused monitor
   { MODKEY,                     XK_o,                     shiftview,         {.i = +1 } },
-	{ MODKEY,                     XK_i,                     shiftview,         {.i = -1 } },
+  { MODKEY,                     XK_i,                     shiftview,         {.i = -1 } },
+
+  // cycle all tags in the same monitor
 	{ MODKEY|ShiftMask,           XK_i,                     shiftempty,        {.i = -1 } },
 	{ MODKEY|ShiftMask,           XK_o,                     shiftempty,        {.i = +1 } },
-	
+
   { MODKEY,                     XK_t,                     setlayout,         {.v = &layouts[0]} }, // set tiling layout
-	{ MODKEY,                     XK_f,                     setlayout,         {.v = &layouts[1]} }, // set full window layout
-	{ MODKEY,                     XK_q,                     setlayout,	       {.v = &layouts[5]} }, /* centeredmaster */
+  { MODKEY,                     XK_f,                     setlayout,         {.v = &layouts[1]} }, // set full window layout
+  { MODKEY,                     XK_q,                     setlayout,	       {.v = &layouts[5]} }, /* centeredmaster */
   //{ Mod1Mask,                 XK_1,                     setlayout,         {.v = &layouts[0]} },
   //{ Mod1Mask,                 XK_2,                     setlayout,         {.v = &layouts[1]} },
   //{ Mod1Mask,                 XK_3,                     setlayout,         {.v = &layouts[2]} },
 	//{ Mod1Mask,                 XK_4,                     setlayout,         {.v = &layouts[3]} },
 
-  // function keys
-	{ ControlMask,                XK_F4,                    spawn,             SHCMD("$HOME/.local/bin/nopath/compositor") },
-	{ 0,                          XF86AudioMute,            spawn,             SHCMD("amixer sset Master toggle; kill -44 $(pidof dwmblocks)") },
-	{ 0,                          XF86AudioLowerVolume,     spawn,             SHCMD("amixer sset Master 5%-; kill -44 $(pidof dwmblocks)") },
-	{ 0,                          XF86AudioRaiseVolume,     spawn,             SHCMD("amixer sset Master 5%+; kill -44 $(pidof dwmblocks)") },
+  // from shell
+	{ ControlMask,                XK_F4,                    spawn,             SHCMD("$HOME/.local/bin/nopath/compositor") }, //toggle window compositor
+	{ 0,                          XF86AudioMute,            spawn,             SHCMD("{ pamixer -t || amixer sset Master toggle; }; kill -44 $(pidof dwmblocks)") },
+	{ 0,                          XF86AudioLowerVolume,     spawn,             SHCMD("{ pamixer --allow-boost -d 5 || amixer sset Master 5%-; }; kill -44 $(pidof dwmblocks)") },
+	{ 0,                          XF86AudioRaiseVolume,     spawn,             SHCMD("{ pamixer --allow-boost -i 5 || amixer sset Master 5%+; }; kill -44 $(pidof dwmblocks)") },
 	{ ControlMask,                XK_Home,                  spawn,             SHCMD("$HOME/.local/bin/nopath/record") },
 	{ MODKEY|ShiftMask,           XK_Return,                spawn,             SHCMD("$HOME/.local/bin/nopath/scratchpad") }, //toggle scratchpad
   //{ ControlMask,              XK_F10,                   spawn,             SHCMD("cmus-remote -s") },
-  
-	{ MODKEY,                     XK_Return,                spawn,             {.v = termcmd } }, //launch terminal
-	{ MODKEY,                     XK_p,                     spawn,             SHCMD("rofi -show drun") }, //launch menu
+
+	//{ MODKEY,                   XK_Return,                spawn,             {.v = termcmd } }, //launch terminal
+	{ MODKEY,                     XK_Return,                spawn,             SHCMD("$TERMINAL || st") }, //launch terminal
+	{ MODKEY,                     XK_p,                     spawn,             SHCMD("rofi -show drun || dmenu_run") }, //launch menu
 	//{ MODKEY,                   XK_p,                     spawn,             {.v = dmenucmd } },
   { MODKEY,                     XK_w,                     spawn,             SHCMD("$BROWSER") },
 	{ MODKEY,                     XK_m,                     spawn,             SHCMD("bookmarker") },
 	{ MODKEY,                     XK_e,                     spawn,             SHCMD("pcmanfm") },
 	{ MODKEY,                     XK_c,                     spawn,             SHCMD("$HOME/.local/bin/nopath/calc") },
-	{ MODKEY|ShiftMask,           XK_Up,                    spawn,             SHCMD("amixer sset Master 5%+; kill -44 $(pidof dwmblocks)") }, //volume up
-	{ MODKEY|ShiftMask,           XK_Down,                  spawn,             SHCMD("amixer sset Master 5%-; kill -44 $(pidof dwmblocks)") }, // volume down
+	{ MODKEY|ShiftMask,           XK_Up,                    spawn,             SHCMD("{ pamixer --allow-boost -i 5 || amixer sset Master 5%+; }; kill -44 $(pidof dwmblocks)") }, //volume up
+	{ MODKEY|ShiftMask,           XK_Down,                  spawn,             SHCMD("{ pamixer --allow-boost -d 5 || amixer sset Master 5%-; }; kill -44 $(pidof dwmblocks)") }, // volume down
 
   { MODKEY,                     XK_b,                     togglebar,         {0} },
 	{ MODKEY,                     XK_Shift_R,               killclient,        {0} }, // close focused window
@@ -178,15 +184,13 @@ static Key keys[] = {
   { MODKEY,                     XK_s,                     togglesticky,      {0} }, // toggle sticky window
 	{ MODKEY|ShiftMask,           XK_space,                 togglefloating,    {0} }, // toggle floating window
 	{ MODKEY,                     XK_d,                     incnmaster,        {.i = -1 } },
-	{ MODKEY,                     XK_h,                     setmfact,          {.f = -0.05} },
-	{ MODKEY,                     XK_l,                     setmfact,          {.f = +0.05} },
 	{ MODKEY,                     XK_Tab,                   view,              {0} }, // go to last tag
 	{ MODKEY,                     XK_BackSpace,             zoom,              {0} },
 	{ MODKEY,                     XK_0,                     view,              {.ui = ~0 } }, //view all windows open on the same monitor
 	{ MODKEY|ShiftMask,           XK_0,                     tag,               {.ui = ~0 } },
 	{ MODKEY,                     XK_period,                focusmon,          {.i = +1 } },
 	{ MODKEY|ShiftMask,           XK_comma,                 tagmon,            {.i = -1 } },
-	
+
   //{ MODKEY|ShiftMask,         XK_period,                tagmon,            {.i = +1 } },
 	//{ MODKEY|ShiftMask,         XK_o,                     shifttag,          {.i = +1 } },
 	//{ MODKEY|ShiftMask,         XK_i,                     shifttag,          {.i = -1 } },
@@ -196,7 +200,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,           XK_g,                     incrgaps,          {.i = -1 } },
 	{ MODKEY|ShiftMask,           XK_q,                     quit,              {0} }, //quit dwm
 };
-	
+
 //{ MODKEY|Mod1Mask,    XK_i,      incrigaps,      {.i = +1 } },
 //{ MODKEY|Mod1Mask,    XK_i,      incrigaps,      {.i = -1 } },
 //{ MODKEY|Mod1Mask,    XK_o,      incrogaps,      {.i = +1 } },
