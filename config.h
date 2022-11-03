@@ -168,7 +168,7 @@ static Key keys[] = {
   //{ ControlMask,              XK_F10,                   spawn,             SHCMD("cmus-remote -s") },
 
 	//{ MODKEY,                   XK_Return,                spawn,             {.v = termcmd } }, //launch terminal
-	{ MODKEY,                     XK_Return,                spawn,             SHCMD("$TERMINAL || st") }, //launch terminal
+	{ MODKEY,                     XK_Return,                spawn,             SHCMD("$TERMINAL") }, //launch terminal
 	{ MODKEY,                     XK_p,                     spawn,             SHCMD("rofi -show drun || dmenu_run") }, //launch menu
 	//{ MODKEY,                   XK_p,                     spawn,             {.v = dmenucmd } },
   { MODKEY,                     XK_w,                     spawn,             SHCMD("$BROWSER") },
