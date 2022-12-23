@@ -1,5 +1,10 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Constants */
+#define TERMINAL "st"
+#define BROWSER "brave-browser"
+#define FILE_MANAGER "pcmanfm"
+
 /* appearance */
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -90,8 +95,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "rofi -show drun", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
+static const char *termcmd[]  = { TERMINAL, NULL };
 
 #define XF86AudioMute 0x1008ff12
 #define XF86AudioLowerVolume 0x1008ff11
@@ -159,21 +164,26 @@ static Key keys[] = {
 	//{ Mod1Mask,                 XK_4,                     setlayout,         {.v = &layouts[3]} },
 
   // from shell
-	{ ControlMask,                XK_F4,                    spawn,             SHCMD("$HOME/.local/bin/nopath/compositor") }, //toggle window compositor
+	{ ControlMask,                XK_F4,                    spawn,             SHCMD("killall -q compton || compton") }, //toggle window compositor
 	{ 0,                          XF86AudioMute,            spawn,             SHCMD("{ pamixer -t || amixer sset Master toggle; }; kill -44 $(pidof dwmblocks)") },
 	{ 0,                          XF86AudioLowerVolume,     spawn,             SHCMD("{ pamixer --allow-boost -d 5 || amixer sset Master 5%-; }; kill -44 $(pidof dwmblocks)") },
 	{ 0,                          XF86AudioRaiseVolume,     spawn,             SHCMD("{ pamixer --allow-boost -i 5 || amixer sset Master 5%+; }; kill -44 $(pidof dwmblocks)") },
-	{ ControlMask,                XK_Home,                  spawn,             SHCMD("$HOME/.local/bin/nopath/record") },
+	//{ ControlMask,                XK_Home,                  spawn,             SHCMD("$HOME/.local/bin/nopath/record") },
 	{ MODKEY|ShiftMask,           XK_Return,                spawn,             SHCMD("$HOME/.local/bin/nopath/scratchpad") }, //toggle scratchpad
+ // { MODKEY|ShiftMask,		        XK_Return,		            spawn,		          {.v = (const char*[]){ "$HOME/.local/bin/nopath/scratchpad", NULL } } },
   //{ ControlMask,              XK_F10,                   spawn,             SHCMD("cmus-remote -s") },
 
 	//{ MODKEY,                   XK_Return,                spawn,             {.v = termcmd } }, //launch terminal
-	{ MODKEY,                     XK_Return,                spawn,             SHCMD("$TERMINAL") }, //launch terminal
+	//{ MODKEY,                     XK_Return,                spawn,             SHCMD("$TERMINAL") }, //launch terminal
+  { MODKEY,		                  XK_Return,		            spawn,		          {.v = (const char*[]){ TERMINAL, NULL } } },
 	{ MODKEY,                     XK_p,                     spawn,             SHCMD("rofi -show drun || dmenu_run") }, //launch menu
 	//{ MODKEY,                   XK_p,                     spawn,             {.v = dmenucmd } },
-  { MODKEY,                     XK_w,                     spawn,             SHCMD("$BROWSER") },
-	{ MODKEY,                     XK_m,                     spawn,             SHCMD("bookmarker") },
-	{ MODKEY,                     XK_e,                     spawn,             SHCMD("pcmanfm") },
+  //{ MODKEY,                     XK_w,                     spawn,             SHCMD("$BROWSER") },
+  { MODKEY,		                  XK_w,		                  spawn,		          {.v = (const char*[]){ BROWSER, NULL } } },
+	//{ MODKEY,                     XK_m,                     spawn,             SHCMD("bookmarker") },
+  { MODKEY,		                  XK_m,		                  spawn,		          {.v = (const char*[]){ "bookmarker", NULL } } },
+  { MODKEY,		                  XK_e,		                  spawn,		          {.v = (const char*[]){ FILE_MANAGER, NULL } } },
+//	{ MODKEY,                     XK_e,                     spawn,             SHCMD("pcmanfm") },
 	{ MODKEY,                     XK_c,                     spawn,             SHCMD("$HOME/.local/bin/nopath/calc") },
 	{ MODKEY|ShiftMask,           XK_Up,                    spawn,             SHCMD("{ pamixer --allow-boost -i 5 || amixer sset Master 5%+; }; kill -44 $(pidof dwmblocks)") }, //volume up
 	{ MODKEY|ShiftMask,           XK_Down,                  spawn,             SHCMD("{ pamixer --allow-boost -d 5 || amixer sset Master 5%-; }; kill -44 $(pidof dwmblocks)") }, // volume down
